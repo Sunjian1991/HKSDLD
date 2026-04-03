@@ -1,0 +1,969 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #1a1a1a;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #646cff;
+}
+
+.app-nav {
+  display: flex;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
+  overflow-x: auto;
+}
+
+.app-nav button {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.app-nav button:hover {
+  color: #646cff;
+  background-color: rgba(100, 108, 255, 0.1);
+}
+
+.app-nav button.active {
+  color: #646cff;
+  border-bottom: 2px solid #646cff;
+}
+
+.test-storage-btn {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+
+.test-storage-btn:hover {
+  background-color: #059669;
+}
+
+/* 存储测试页面样式 */
+.storage-test {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.storage-status,
+.data-stats,
+.test-actions,
+.test-info {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.status-label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.status-value {
+  font-weight: 600;
+}
+
+.status-value.available {
+  color: #10b981;
+}
+
+.status-value.unavailable {
+  color: #ef4444;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stat-item {
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.test-btn {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.test-btn:hover {
+  background-color: #535bf2;
+}
+
+.clear-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+  background-color: #dc2626;
+}
+
+.test-info {
+  background-color: rgba(100, 108, 255, 0.1);
+  border-left: 4px solid #646cff;
+}
+
+.test-info p {
+  margin: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #242424;
+}
+
+/* 通用样式 */
+h2 {
+  margin-top: 0;
+  color: #646cff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+input, select, textarea {
+  padding: 0.5rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #646cff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #535bf2;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* 搜索框样式 */
+.search-section {
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 0;
+}
+
+.search-box {
+  margin-bottom: 1rem;
+}
+
+/* 装备管理样式 */
+.equipment-manager {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.add-equipment-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.add-equipment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.add-equipment input {
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 0;
+}
+
+.import-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.import-hint {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.file-upload {
+  margin-bottom: 1rem;
+}
+
+.file-upload input[type="file"] {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.equipment-list-section {
+  margin-top: 2rem;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.delete-all-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.delete-all-btn:hover {
+  background-color: #dc2626;
+}
+
+.equipment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.equipment-item {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.equipment-item:hover {
+  border-color: #646cff;
+}
+
+.equipment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.equipment-name {
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.equipment-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.equipment-actions button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.equipment-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.attribute-tag {
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(100, 108, 255, 0.2);
+  color: #646cff;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+/* 编辑表单样式 */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.edit-form input {
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.edit-form button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* 流派管理样式 */
+.build-manager {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.build-form {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+}
+
+/* 符文选择样式 */
+.rune-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.checkbox-item:hover {
+  background-color: rgba(100, 108, 255, 0.1);
+}
+
+.checkbox-item.selected {
+  background-color: rgba(100, 108, 255, 0.2);
+}
+
+.rune-name {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+/* 装备选择样式 */
+.equipment-selection-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.equipment-selection-item {
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.equipment-selection-item:hover {
+  border-color: #646cff;
+  background-color: rgba(100, 108, 255, 0.1);
+}
+
+.equipment-selection-item.selected {
+  border-color: #646cff;
+  background-color: rgba(100, 108, 255, 0.2);
+}
+
+.equipment-selection-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.no-results {
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* 流派列表样式 */
+.build-list {
+  margin-top: 2rem;
+}
+
+.build-item {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.build-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #333;
+}
+
+.build-header h4 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.build-actions button {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.build-details {
+  margin-top: 0.5rem;
+}
+
+.build-details p {
+  margin: 0.5rem 0;
+}
+
+.build-equipment {
+  margin-top: 0.5rem;
+}
+
+.build-equipment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.build-equipment-item {
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+/* 符文管理样式 */
+.rune-manager {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.category-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.add-category {
+  margin-bottom: 1rem;
+}
+
+.category-list {
+  margin-top: 1rem;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.category-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.category-actions button {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.rune-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.add-rune {
+  margin-bottom: 1rem;
+}
+
+.rune-list {
+  margin-top: 1rem;
+}
+
+.category-runes {
+  margin-bottom: 1.5rem;
+}
+
+.category-runes h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.25rem;
+}
+
+.rune-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.5rem;
+}
+
+.rune-item {
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rune-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.rune-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rune-actions button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* 英雄管理样式 */
+.hero-manager {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.hero-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.add-hero {
+  margin-bottom: 1rem;
+}
+
+.hero-list {
+  margin-top: 1rem;
+}
+
+.category-heroes {
+  margin-bottom: 1.5rem;
+}
+
+.category-heroes h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.25rem;
+}
+
+.hero-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.5rem;
+}
+
+.hero-item {
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hero-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.hero-select {
+  flex-shrink: 0;
+}
+
+.hero-details {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-name {
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-alias {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.hero-title {
+  color: rgba(100, 108, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.batch-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #646cff;
+}
+
+.batch-actions-left {
+  flex: 1;
+}
+
+.batch-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.batch-category-select {
+  padding: 0.5rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
+  min-width: 120px;
+}
+
+.batch-category-btn {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.batch-category-btn:hover {
+  background-color: #535bf2;
+}
+
+.batch-category-btn:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.batch-delete-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.batch-delete-btn:hover {
+  background-color: #dc2626;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hero-actions button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* 数据同步样式 */
+.data-sync {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.data-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #646cff;
+}
+
+/* 计数徽章样式 */
+.count-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: rgba(100, 108, 255, 0.2);
+  color: #646cff;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+.export-section, .import-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.import-section textarea {
+  width: 100%;
+  margin-right: 0;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  color: #22c55e;
+  margin-bottom: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .app-main {
+    padding: 1rem;
+  }
+  
+  .app-nav {
+    flex-direction: column;
+  }
+  
+  .app-nav button {
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+  
+  .app-nav button.active {
+    border-bottom: 1px solid #333;
+    background-color: rgba(100, 108, 255, 0.1);
+  }
+  
+  .equipment-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .equipment-selection-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .rune-checkbox-group {
+    grid-template-columns: 1fr;
+  }
+  
+  .build-equipment-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .edit-form {
+    flex-direction: column;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+  
+  .add-equipment {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .add-equipment input {
+    width: 100%;
+  }
+}

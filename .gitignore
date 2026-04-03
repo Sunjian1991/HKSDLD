@@ -1,0 +1,29 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Storage directory
+storage/
+
+# Environment variables
+.env
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.tempheroku loginheroku login
