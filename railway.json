@@ -1,6 +1,7 @@
 {
   "build": {
-    "command": "npm install && npm run build"
-  },
-  "install": "npm install"
+    "builder": "npm",
+    "command": "npm install && npm run build",
+    "install": "npm install"
+  }
 }
