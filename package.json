@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "server": "node server.js",
     "start": "node server.js",
-    "prepare": "echo 'No prepare script needed'"
+    "install:prod": "npm install",
+    "build:prod": "npm run install:prod && npm run build"
   },
   "engines": {
     "node": ">=14.0.0"
