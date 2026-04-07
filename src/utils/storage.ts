@@ -245,7 +245,7 @@ export const exportData = (): string => {
 };
 
 // 导入数据
-export const importData = async (json: string): StoredData => {
+export const importData = async (json: string): Promise<StoredData> => {
   try {
     const data = JSON.parse(json);
     // 验证导入的数据结构
@@ -272,7 +272,7 @@ export const importData = async (json: string): StoredData => {
 };
 
 // 清除所有数据
-export const clearData = async (): void => {
+export const clearData = async (): Promise<void> => {
   try {
     if (storageAvailable) {
       localStorage.removeItem(STORAGE_KEY);
