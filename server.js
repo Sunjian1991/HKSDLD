@@ -7,6 +7,10 @@ import { fileURLToPath } from 'url';
 const app = express();
 const port = process.env.PORT || 3001;
 
+// 获取当前目录路径
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // 中间件
 app.use(cors());
 app.use(express.json());
