@@ -67,7 +67,7 @@ app.post('/api/data', (req, res) => {
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // 处理所有其他请求，返回index.html
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
