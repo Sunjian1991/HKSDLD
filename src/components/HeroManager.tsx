@@ -94,10 +94,7 @@ function HeroManager({ heroes, categories, onDataChange }: HeroManagerProps) {
     );
   };
 
-  // 过滤英雄列表
-  const filteredHeroes = heroes.filter(item => 
-    searchTerm === '' || item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
 
   const handleDeleteCategory = (categoryId: string) => {
     const updatedCategoryList = categories.filter(item => item.id !== categoryId);
