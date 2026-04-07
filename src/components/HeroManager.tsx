@@ -14,6 +14,7 @@ function HeroManager({ heroes, categories, onDataChange }: HeroManagerProps) {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [importText, setImportText] = useState('');
   const [importCategoryText, setImportCategoryText] = useState('');
+  const [importJsonText, setImportJsonText] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedHeroIds, setSelectedHeroIds] = useState<string[]>([]);
 
@@ -202,6 +203,83 @@ function HeroManager({ heroes, categories, onDataChange }: HeroManagerProps) {
     }
   };
 
+  const handleImportJson = () => {
+    try {
+      const importData = JSON.parse(importJsonText);
+      
+      if (!importData || typeof importData !== 'object') {
+        alert('JSON格式错误，请检查输入');
+        return;
+      }
+      
+      let updatedCategories = [...categories];
+      let updatedHeroes = [...heroes];
+      
+      // 处理分类数据
+      if (Array.isArray(importData.categories)) {
+        const existingCategoryNames = new Set(categories.map(cat => cat.name.toLowerCase()));
+        const newCategories = importData.categories
+          .filter((cat: any) => typeof cat.name === 'string' && cat.name.trim())
+          .filter((cat: any) => !existingCategoryNames.has(cat.name.toLowerCase()))
+          .map((cat: any) => ({
+            id: generateId(),
+            name: cat.name.trim(),
+          }));
+        
+        if (newCategories.length > 0) {
+          updatedCategories = [...updatedCategories, ...newCategories];
+        }
+      }
+      
+      // 构建分类名称到ID的映射
+      const categoryMap = new Map(updatedCategories.map(cat => [cat.name.toLowerCase(), cat.id]));
+      
+      // 处理英雄数据
+      if (Array.isArray(importData.heroes)) {
+        const existingHeroes = new Set(updatedHeroes.map(hero => hero.name.toLowerCase()));
+        const newHeroes: Hero[] = [];
+        
+        importData.heroes.forEach((heroData: any) => {
+          if (typeof heroData.name === 'string' && heroData.name.trim()) {
+            const heroName = heroData.name.trim();
+            if (!existingHeroes.has(heroName.toLowerCase())) {
+              let categoryId = '';
+              if (typeof heroData.categoryName === 'string' && heroData.categoryName.trim()) {
+                const categoryName = heroData.categoryName.trim().toLowerCase();
+                categoryId = categoryMap.get(categoryName) || '';
+              }
+              
+              if (!categoryId && updatedCategories.length > 0) {
+                categoryId = updatedCategories[0].id;
+              }
+              
+              if (categoryId) {
+                newHeroes.push({
+                  id: generateId(),
+                  name: heroName,
+                  alias: heroData.alias?.trim() || undefined,
+                  title: heroData.title?.trim() || undefined,
+                  categoryId,
+                });
+                existingHeroes.add(heroName.toLowerCase());
+              }
+            }
+          }
+        });
+        
+        if (newHeroes.length > 0) {
+          updatedHeroes = [...updatedHeroes, ...newHeroes];
+        }
+      }
+      
+      onDataChange(updatedHeroes, updatedCategories);
+      setImportJsonText('');
+      alert('JSON数据导入成功！');
+    } catch (error) {
+      alert('JSON解析错误，请检查输入格式');
+    }
+  };
+
   return (
     <div className="hero-manager">
       <h2>英雄池管理 <span className="count-badge">{heroes.length} 个英雄</span></h2>
@@ -298,6 +376,18 @@ function HeroManager({ heroes, categories, onDataChange }: HeroManagerProps) {
             rows={3}
           />
           <button onClick={handleImportHeroes}>批量导入英雄</button>
+        </div>
+        
+        <div className="import-section">
+          <p className="import-hint">JSON格式导入：一次性导入分类和英雄数据<br/>
+          示例：{`{"categories":[{"name":"坦克"},{"name":"法师"}],"heroes":[{"name":"盖伦","categoryName":"坦克"},{"name":"亚索","categoryName":"法师"}]}`}</p>
+          <textarea
+            placeholder='示例：{"categories":[{"name":"坦克"},{"name":"法师"}],"heroes":[{"name":"盖伦","categoryName":"坦克"},{"name":"亚索","categoryName":"法师"}]}'
+            value={importJsonText}
+            onChange={(e) => setImportJsonText(e.target.value)}
+            rows={5}
+          />
+          <button onClick={handleImportJson}>批量导入JSON数据</button>
         </div>
         
         <div className="hero-list">
