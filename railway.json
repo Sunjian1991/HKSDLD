@@ -1,7 +1,5 @@
 {
   "build": {
-    "builder": "npm",
-    "command": "npm run build",
-    "install": "npm run install:prod"
+    "command": "npm run install:prod && npm run build"
   }
 }
