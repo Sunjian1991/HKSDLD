@@ -4,7 +4,7 @@ import RuneManager from './components/RuneManager';
 import HeroManager from './components/HeroManager';
 import BuildManager from './components/BuildManager';
 import DataSync from './components/DataSync';
-import StorageTest from './components/StorageTest';
+
 import { Equipment, Rune, Hero, Build, Category } from './types';
 import { saveData, loadData, loadDataFromServer } from './utils/storage';
 
@@ -18,7 +18,7 @@ interface AppState {
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'equipment' | 'runes' | 'heroes' | 'builds' | 'sync' | 'test'>('equipment');
+  const [activeTab, setActiveTab] = useState<'equipment' | 'runes' | 'heroes' | 'builds' | 'sync'>('equipment');
   const [state, setState] = useState<AppState>(() => {
     const savedData = loadData();
     return {
@@ -57,26 +57,7 @@ function App() {
     await saveData(updatedState);
   };
 
-  const handleTestStorage = () => {
-    // 测试保存数据
-    const testHero = {
-      id: `test-${Date.now()}`,
-      name: '测试英雄',
-      aliases: ['测试', 'TEST'],
-      title: '测试之王',
-      categoryId: state.heroCategories[0]?.id || 'default'
-    };
-    
-    const updatedHeroes = [...state.heroes, testHero];
-    handleDataChange({ heroes: updatedHeroes });
-    console.log('Test hero added:', testHero);
-    
-    // 测试加载数据
-    setTimeout(() => {
-      const loadedData = loadData();
-      console.log('Data loaded after test:', loadedData);
-    }, 1000);
-  };
+
 
   return (
     <div className="app">
@@ -114,18 +95,6 @@ function App() {
           onClick={() => setActiveTab('sync')}
         >
           数据同步
-        </button>
-        <button 
-          className={activeTab === 'test' ? 'active' : ''}
-          onClick={() => setActiveTab('test')}
-        >
-          存储测试
-        </button>
-        <button 
-          className="test-storage-btn"
-          onClick={handleTestStorage}
-        >
-          测试存储
         </button>
       </nav>
 
@@ -170,9 +139,6 @@ function App() {
             data={state}
             onDataImport={(importedData) => handleDataChange(importedData)}
           />
-        )}
-        {activeTab === 'test' && (
-          <StorageTest />
         )}
       </main>
     </div>
