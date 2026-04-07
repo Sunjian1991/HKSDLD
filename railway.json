@@ -1,5 +1,6 @@
 {
   "build": {
-    "command": "npm run build:prod"
-  }
+    "command": "npm install && tsc && vite build"
+  },
+  "install": "npm install"
 }
