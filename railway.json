@@ -1,5 +1,0 @@
-{
-  "build": {
-    "command": "npm run install:prod && npm run build"
-  }
-}
